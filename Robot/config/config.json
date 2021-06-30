@@ -1,0 +1,11 @@
+{
+	"RF_Sensor1": {
+		"position" : [0.2, 0.2, 0]
+	},
+	"RF_Sensor2": {
+		"position" : [0.2, 0.2, 0]
+	},
+	"RF_Sensor3": {
+		"position" : [0.2, 0.2, 0]
+	}
+}
