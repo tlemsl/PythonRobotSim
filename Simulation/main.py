@@ -22,8 +22,11 @@ class ComboSim(Simulator):
 		self.Robot = Combo()
 
 	def set_point(self, event, x, y, flags, param):
+		click = False
+		if event == cv2.EVENT_LBUTTONDOWN:
+			click = True
 
-		if event == cv2.EVENT_LBUTTONUP:
+		if event == cv2.EVENT_MOUSEMOVE:
 			self._tag_position.set((x-250)/self._resolution,-(y-250)/self._resolution,0)
 			self.Robot.set_tag_position(self._tag_position)
 
@@ -33,11 +36,10 @@ class ComboSim(Simulator):
 		cv2.circle(self._main_img,(int(x*self._resolution+250),int(250 - y*self._resolution)),3,(255,255,255),-1)
 		for Sensor in self.Robot.Sensors:
 			x,y,z = Sensor.get_position()
-			print(x,y,z)
-			cv2.circle(self._main_img,(int(x*self._resolution+250),int(250 - y*self._resolution)),1,(0,255,255),-1)
+			cv2.circle(self._main_img,(int(x*self._resolution+250),int(250 - y*self._resolution)),2,(0,255,255),-1)
 
 		x,y,_ = self._tag_position.get()
-		cv2.circle(self._main_img,(int(x*self._resolution+250),int(250 - y*self._resolution)),1,(255,0,0),-1)
+		cv2.circle(self._main_img,(int(x*self._resolution+250),int(250 - y*self._resolution)),5,(255,0,0),-1)
 
 
 if __name__ == "__main__":

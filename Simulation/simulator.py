@@ -13,7 +13,7 @@ class Simulator:
 	def __init__(self):
 		self._resolution = 100
 		self.set_robot()
-		self._hz = 10.0
+		self._hz = 60.0
 
 		self._main_img = np.zeros((500,500,3), np.uint8)
 

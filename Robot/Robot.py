@@ -42,7 +42,7 @@ class Combo(Robot):
 		self._S3 = RF_Sensor(self._position, -0.1, 0, 0.3)
 		self.Sensors = [self._S1, self._S2, self._S3]
 		self._tag_position = Position(0,0,0)
-		self._hz = 10
+		self._hz = 60
 
 		self._data = [0, 0, 0]
 		self._SensorThread = threading.Thread(target = self._get_sensors)
