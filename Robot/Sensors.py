@@ -24,6 +24,11 @@ class Sensor:
 		self._position.set(x,y,z)
 	def update_position(self):
 		self._position.update()
+	def __del__(self):
+		pass
+	def stop(self):
+		self.__del__()
+
 
 
 class RF_Sensor(Sensor):
