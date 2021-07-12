@@ -41,7 +41,7 @@ class Logger:
 		self.save()
 		if self._plot_flag:
 			self._plot()
-	
+
 	def save(self):
 		if self._columns == None:
 			self._columns = [f"Variable {i}" for i in range(len(self._data[0]))]

@@ -52,9 +52,9 @@ class Combo(Robot):
 		self._hz = 60
 		self._error=[0,0]
 		self._data = [0, 0, 0]
-		self._ErrorLogger = Logger("Control Error", self._error, self._hz, columns = ["Velocity Error", "Angle Error"], plot_flag =False)
-		self._SensorLogger = Logger("Sensor Data", self._data, self._hz, plot_flag = False)
-		self._Loggers = [self._ErrorLogger, self._SensorLogger]
+		self._ErrorLogger = Logger("Control Error", self._error, self._hz, columns = ["Velocity Error", "Angle Error"], plot_flag =True)
+		self._SensorLogger = Logger("Sensor Data", self._data, 3, plot_flag = True)
+		self._Loggers = [self._SensorLogger,self._ErrorLogger,]
 		self._SensorThread = threading.Thread(target = self._get_sensors)
 		self._SensorThread.daemon = True
 		self._SensorThread.start()
