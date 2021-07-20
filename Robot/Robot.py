@@ -1,5 +1,6 @@
 from common.position import Position
 from common.logger import Logger
+from common.control import PID
 from Sensors import RF_Sensor
 import threading
 from time import sleep
@@ -48,13 +49,18 @@ class Combo(Robot):
 		self._S2 = RF_Sensor(self._position, 0.2, 0.2, 0)
 		self._S3 = RF_Sensor(self._position, -0.1, 0, 0.3)
 		self.Sensors = [self._S1, self._S2, self._S3]
+
 		self._tag_position = Position(0,0,0)
 		self._hz = 60
 		self._error=[0,0]
+		self._vel_controller = PID(1,0.01,0.1,2)
+		self._ang_controller = PID(5,3,0.7,2)
 		self._data = [0, 0, 0]
+
 		self._ErrorLogger = Logger("Control Error", self._error, self._hz, columns = ["Velocity Error", "Angle Error"], plot_flag =True)
-		self._SensorLogger = Logger("Sensor Data", self._data, 3, plot_flag = True)
+		self._SensorLogger = Logger("Sensor Data", self._data, 3, plot_flag =False)
 		self._Loggers = [self._SensorLogger,self._ErrorLogger,]
+
 		self._SensorThread = threading.Thread(target = self._get_sensors)
 		self._SensorThread.daemon = True
 		self._SensorThread.start()
@@ -75,8 +81,10 @@ class Combo(Robot):
 
 		self._error[0] = cos(yaw)*(tx - x) + sin(yaw)*(ty - y)
 		self._error[1] = -sin(yaw)*(tx - x) + cos(yaw)*(ty - y)
-		v = k1*self._error[0]
-		w = k2*self._error[1]
+		#v = k1*self._error[0]
+		#w = k2*self._error[1]
+		v = self._vel_controller.get(self._error[0])
+		w = self._ang_controller.get(self._error[1])
 		self._position.update(v,w,1/self._hz)
 	def recognition(self):
 		pass

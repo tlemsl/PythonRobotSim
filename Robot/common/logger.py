@@ -58,12 +58,15 @@ class Logger:
 	def _plot(self):
 		if self._plot_flag:
 			data = np.array(self._data)
-			fig, axes = plt.subplots(1, len(self._columns)-1, sharex=True, sharey=True)
+			fig, axes = plt.subplots(1, len(self._columns)-1, sharex=True)
 			for i in range(len(self._columns) - 1):
 				axes[i].plot(data[:,0], data[:,i+1])
+				min = data[:, i+1].min()
+				max = data[:, i+1].max()
 				axes[i].set_title(self._columns[i+1])
 				axes[i].set_xlabel("Time(s)")
 				axes[i].set_ylabel(self._columns[i+1])
+				axes[i].set_ylim([min, max])
 			fig.suptitle(self._name)
 			plt.show()
 	def stop(self):
